@@ -28,7 +28,11 @@ export const courseFormSchema = z.object({
     .array(
       z.object({
         name: z.string().trim().min(1, "กรอกชื่อผู้สอน"),
-        email: z.email("อีเมลไม่ถูกต้อง"), // ← ตรวจทีละแถว
+        email: z
+          .email("อีเมลไม่ถูกต้อง")
+          .refine((val) => val.endsWith("@cmu.ac.th"), {
+            message: "ต้องเป็นอีเมล @cmu.ac.th",
+          }), // ← ตรวจทีละแถว
       }),
     )
     // ─── Array Validation: ตรวจทั้งรายการ ───
